@@ -72,3 +72,5 @@ CREATE TABLE class_schedule (
     FOREIGN KEY (class_id) REFERENCES classes(class_id) ON DELETE CASCADE,
     FOREIGN KEY (staff_id) REFERENCES staff(staff_id) ON DELETE CASCADE
 );
+
+-- memberships table
