@@ -33,8 +33,21 @@ CREATE TABLE staff (
     last_name TEXT NOT NULL,
     email UNIQUE TEXT NOT NULL,
     phone_number TEXT NOT NULL,
-    position TEXT CHECK(position IN ('Trainer', 'Manager', 'Receptionist', 'Maintenance')),
+    position TEXT CHECK(position IN ('Trainer', 'Manager', 'Receptionist', 'Maintenance')) NOT NULL,
     hire_date DATE NOT NULL,
     location_id INTEGER NOT NULL,
     FOREIGN KEY (location_id) REFERENCES locations(location_id) ON DELETE CASCADE
-)
+);
+
+-- equipment table
+CREATE TABLE equipment (
+    equipment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    type TEXT CHECK(type IN ('Cardio', 'Strength')) NOT NULL,
+    purchase_date DATE NOT NULL,
+    last_maintenance_date DATE NOT NULL,
+    next_maintenance_date DATE NOT NULL,
+    location_id INTEGER NOT NULL,
+    FOREIGN KEY (location_id) REFERENCES locations(location_id) ON DELETE CASCADE
+);
+
