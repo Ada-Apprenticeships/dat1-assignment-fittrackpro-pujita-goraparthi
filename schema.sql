@@ -3,7 +3,7 @@
 -- Enable foreign keys
 PRAGMA foreign_keys = ON;
 
--- Locations Table
+-- locations Table
 CREATE TABLE locations (
     location_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE locations (
     opening_hours TEXT NOT NULL
 );
 
--- Members table
+-- members table
 CREATE TABLE members (
     member_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
@@ -25,3 +25,16 @@ CREATE TABLE members (
     emergency_contact_name TEXT NOT NULL,
     emergency_contact_phone TEXT NOT NULL
 );
+
+-- staff table
+CREATE TABLE staff (
+    staff_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    email UNIQUE TEXT NOT NULL,
+    phone_number TEXT NOT NULL,
+    position TEXT CHECK(position IN ('Trainer', 'Manager', 'Receptionist', 'Maintenance')),
+    hire_date DATE NOT NULL,
+    location_id INTEGER NOT NULL,
+    FOREIGN KEY (location_id) REFERENCES locations(location_id) ON DELETE CASCADE
+)
