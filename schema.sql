@@ -61,3 +61,14 @@ CREATE TABLE classes (
     location_id INTEGER NOT NULL,
     FOREIGN KEY (location_id) REFERENCES locations(location_id) ON DELETE CASCADE
 );
+
+-- class_schedule table
+CREATE TABLE class_schedule (
+    schedule_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    class_id INTEGER NOT NULL,
+    staff_id INTEGER NOT NULL,
+    start_time DATETIME NOT NULL,
+    end_time DATETIME NOT NULL,
+    FOREIGN KEY (class_id) REFERENCES classes(class_id) ON DELETE CASCADE,
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id) ON DELETE CASCADE
+);
