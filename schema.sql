@@ -51,3 +51,13 @@ CREATE TABLE equipment (
     FOREIGN KEY (location_id) REFERENCES locations(location_id) ON DELETE CASCADE
 );
 
+-- classes table
+CREATE TABLE classes (
+    class_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    capacity INTEGER NOT NULL,
+    duration INTEGER NOT NULL,
+    location_id INTEGER NOT NULL,
+    FOREIGN KEY (location_id) REFERENCES locations(location_id) ON DELETE CASCADE
+);
