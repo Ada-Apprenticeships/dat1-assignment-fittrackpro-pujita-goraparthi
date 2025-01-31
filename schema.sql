@@ -115,3 +115,16 @@ CREATE TABLE payments(
     payment_type TEXT CHECK(payment_type IN ('Monthly membership fee', 'Day pass')) NOT NULL,
     FOREIGN KEY member_id REFERENCES members(member_id) ON DELETE CASCADE
 );
+
+-- personal_training_sessions table
+CREATE TABLE personal_training_sessions(
+    session_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    member_id INTEGER NOT NULL,
+    staff_id INTEGER NOT NULL,
+    session_date NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    notes TEXT NOT NULL,
+    FOREIGN KEY member_id REFERENCES members(member_id) ON DELETE CASCADE,
+    FOREIGN KEY staff_id REFERENCES staff(staff_id) ON DELETE CASCADE
+);
