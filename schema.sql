@@ -83,3 +83,14 @@ CREATE TABLE members (
     status TEXT CHECK(status IN ('Active', 'Inactive')) NOT NULL,
     FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
 );
+
+-- attendance table
+CREATE TABLE attendance (
+    attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    member_id INTEGER NOT NULL,
+    location_id INTEGER NOT NULL,
+    check_in_time DATETIME NOT NULL,
+    check_out_time DATETIME NOT NULL,
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE,
+    FOREIGN KEY (location_id) REFERENCES members(location_id) ON DELETE CASCADE
+);
