@@ -94,3 +94,13 @@ CREATE TABLE attendance (
     FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE,
     FOREIGN KEY (location_id) REFERENCES members(location_id) ON DELETE CASCADE
 );
+
+-- class_attendance table
+CREATE TABLE class_attendance(
+    class_attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    schedule_id INTEGER NOT NULL,
+    member_id INTEGER NOT NULL,
+    attendance_status TEXT CHECK(attendance_status IN('Registered', 'Attended', 'Unattended')) NOT NULL,
+    FOREIGN KEY (schedule_id) REFERENCES class_schedule(schedule_id) ON DELETE CASCADE,
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
+);
