@@ -140,3 +140,14 @@ CREATE TABLE member_health_metrics(
     bmi REAL NOT NULL,
     FOREIGN KEY member_id REFERENCES members(member_id) ON DELETE CASCADE
 );
+
+-- equipment_maintenance_log table
+CREATE TABLE equipment_maintenance_log(
+    log_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    equipment_id INTEGER NOT NULL,
+    maintenance_date DATE NOT NULL,
+    description TEXT NOT NULL,
+    staff_id INTEGER NOT NULL,
+    FOREIGN KEY staff_id REFERENCES staff(staff_id) ON DELETE CASCADE,
+    FOREIGN KEY equipment_id REFERENCES equipment(equipment_id) ON DELETE CASCADE
+);
