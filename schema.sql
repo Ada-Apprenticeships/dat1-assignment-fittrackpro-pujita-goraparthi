@@ -128,3 +128,15 @@ CREATE TABLE personal_training_sessions(
     FOREIGN KEY member_id REFERENCES members(member_id) ON DELETE CASCADE,
     FOREIGN KEY staff_id REFERENCES staff(staff_id) ON DELETE CASCADE
 );
+
+-- member_health_metrics table
+CREATE TABLE member_health_metrics(
+    metric_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    member_id INTEGER NOT NULL,
+    measurement_date DATE NOT NULL,
+    weight REAL NOT NULL,
+    body_fat_percentage REAL NOT NULL,
+    muscle_mass REAL NOT NULL,
+    bmi REAL NOT NULL,
+    FOREIGN KEY member_id REFERENCES members(member_id) ON DELETE CASCADE
+);
