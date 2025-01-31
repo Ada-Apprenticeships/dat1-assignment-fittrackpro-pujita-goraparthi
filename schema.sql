@@ -74,3 +74,12 @@ CREATE TABLE class_schedule (
 );
 
 -- memberships table
+CREATE TABLE members (
+    membership_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    member_id INTEGER NOT NULL,
+    type TEXT CHECK(type IN ('Premium', 'Basic')) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    status TEXT CHECK(status IN ('Active', 'Inactive')) NOT NULL,
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
+);
