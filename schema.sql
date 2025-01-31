@@ -104,3 +104,14 @@ CREATE TABLE class_attendance(
     FOREIGN KEY (schedule_id) REFERENCES class_schedule(schedule_id) ON DELETE CASCADE,
     FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
 );
+
+-- payments table
+CREATE TABLE payments(
+    payment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    member_id INTEGER NOT NULL,
+    amount REAL NOT NULL,
+    payment_date DATETIME NOT NULL,
+    payment_method TEXT CHECK(payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal', 'Cash')) NOT NULL,
+    payment_type TEXT CHECK(payment_type IN ('Monthly membership fee', 'Day pass')) NOT NULL,
+    FOREIGN KEY member_id REFERENCES members(member_id) ON DELETE CASCADE
+);
