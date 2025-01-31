@@ -18,7 +18,7 @@ CREATE TABLE members (
     member_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
-    email UNIQUE TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
     phone_number TEXT NOT NULL,
     date_of_birth DATE NOT NULL,
     join_date DATE NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE staff (
     staff_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
-    email UNIQUE TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
     phone_number TEXT NOT NULL,
     position TEXT CHECK(position IN ('Trainer', 'Manager', 'Receptionist', 'Maintenance')) NOT NULL,
     hire_date DATE NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE class_schedule (
 );
 
 -- memberships table
-CREATE TABLE members (
+CREATE TABLE memberships (
     membership_id INTEGER PRIMARY KEY AUTOINCREMENT,
     member_id INTEGER NOT NULL,
     type TEXT CHECK(type IN ('Premium', 'Basic')) NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE payments(
     payment_date DATETIME NOT NULL,
     payment_method TEXT CHECK(payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal', 'Cash')) NOT NULL,
     payment_type TEXT CHECK(payment_type IN ('Monthly membership fee', 'Day pass')) NOT NULL,
-    FOREIGN KEY member_id REFERENCES members(member_id) ON DELETE CASCADE
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
 );
 
 -- personal_training_sessions table
@@ -125,8 +125,8 @@ CREATE TABLE personal_training_sessions(
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
     notes TEXT NOT NULL,
-    FOREIGN KEY member_id REFERENCES members(member_id) ON DELETE CASCADE,
-    FOREIGN KEY staff_id REFERENCES staff(staff_id) ON DELETE CASCADE
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE,
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id) ON DELETE CASCADE
 );
 
 -- member_health_metrics table
@@ -138,7 +138,7 @@ CREATE TABLE member_health_metrics(
     body_fat_percentage REAL NOT NULL,
     muscle_mass REAL NOT NULL,
     bmi REAL NOT NULL,
-    FOREIGN KEY member_id REFERENCES members(member_id) ON DELETE CASCADE
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
 );
 
 -- equipment_maintenance_log table
@@ -148,6 +148,6 @@ CREATE TABLE equipment_maintenance_log(
     maintenance_date DATE NOT NULL,
     description TEXT NOT NULL,
     staff_id INTEGER NOT NULL,
-    FOREIGN KEY staff_id REFERENCES staff(staff_id) ON DELETE CASCADE,
-    FOREIGN KEY equipment_id REFERENCES equipment(equipment_id) ON DELETE CASCADE
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id) ON DELETE CASCADE,
+    FOREIGN KEY (equipment_id) REFERENCES equipment(equipment_id) ON DELETE CASCADE
 );
