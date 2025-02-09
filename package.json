@@ -4,11 +4,11 @@
     "description": "Fittrack Pro Database Assignment",
     "main": "scripts/import.js",
     "scripts": {
-      "import": "node scripts/import.js"
+        "import": "node scripts/import.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "sqlite3": "^5.0.2"
+        "sqlite3": "^5.1.7"
     }
-  }
+}
