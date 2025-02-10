@@ -18,8 +18,8 @@
 -- 4. Cancel a class registration
 -- TODO: Write a query to cancel a class registration
 
--- 5. List top 5 most popular classes
--- TODO: Write a query to list top 5 most popular classes
+-- 5. List top 3 most popular classes
+-- TODO: Write a query to list top 3 most popular classes
 
 -- 6. Calculate average number of classes per member
 -- TODO: Write a query to calculate average number of classes per member
