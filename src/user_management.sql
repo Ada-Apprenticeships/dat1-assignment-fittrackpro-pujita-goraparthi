@@ -35,17 +35,21 @@ FROM members;
 -- 4. Find member with the most class registrations
 -- TODO: Write a query to find the member with the most class registrations
 
-SELECT 
-    m.member_id,
-    m.first_name,
-    m.last_name,
-    COUNT(ca.member_id) AS registration_count
-FROM members m
-JOIN class_attendance ca ON m.member_id = ca.member_id
-GROUP BY m.member_id
-ORDER BY registration_count DESC
-LIMIT 1;
-
+WITH registration_counts AS (
+    SELECT 
+        m.member_id,
+        m.first_name,
+        m.last_name,
+        COUNT(ca.schedule_id) AS registration_count
+    FROM members m
+    JOIN class_attendance ca 
+        ON m.member_id = ca.member_id
+    WHERE ca.attendance_status = 'Registered'  
+    GROUP BY m.member_id
+)
+SELECT *
+FROM registration_counts
+WHERE registration_count = (SELECT MAX(registration_count) FROM registration_counts);
 
 -- 5. Find member with the least class registrations
 -- TODO: Write a query to find the member with the least class registrations
@@ -54,16 +58,27 @@ SELECT
     m.member_id,
     m.first_name,
     m.last_name,
-    COUNT(ca.member_id) AS registration_count
+    COUNT(ca.schedule_id) AS registration_count
 FROM members m
-JOIN class_attendance ca ON m.member_id = ca.member_id
+JOIN class_attendance ca 
+    ON m.member_id = ca.member_id
+WHERE ca.attendance_status = 'Registered'
 GROUP BY m.member_id
-ORDER BY registration_count ASC
-LIMIT 1;
+HAVING registration_count = (
+    SELECT MIN(class_count)
+    FROM (
+        SELECT COUNT(schedule_id) AS class_count
+        FROM class_attendance
+        WHERE attendance_status = 'Registered'
+        GROUP BY member_id
+    )
+);
+
 
 -- 6. Calculate the percentage of members who have attended at least one class
 -- TODO: Write a query to calculate the percentage of members who have attended at least one class
 
 SELECT 
-    100.0 * (COUNT(DISTINCT ca.member_id)/ (SELECT COUNT(*) FROM members)) AS attendance_percentage
-FROM class_attendance ca;
+    (COUNT(DISTINCT member_id) * 100.0 / (SELECT COUNT(*) FROM members)) AS attendance_percentage
+FROM class_attendance
+WHERE attendance_status = 'Attended';
