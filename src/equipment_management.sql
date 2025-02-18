@@ -29,6 +29,6 @@ GROUP BY type;
 
 SELECT 
     type AS equipment_type,
-    AVG(strftime('%Y', 'now') - strftime('%Y', purchase_date)) AS avg_age_years
+    AVG((strftime('%s', 'now') - strftime('%s', purchase_date)) / 86400.0) AS avg_age_days
 FROM equipment
 GROUP BY type;
