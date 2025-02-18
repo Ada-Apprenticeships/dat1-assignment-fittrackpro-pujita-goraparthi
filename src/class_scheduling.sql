@@ -21,21 +21,21 @@ JOIN staff s ON cs.staff_id = s.staff_id;
 -- 2. Find available classes for a specific date
 -- TODO: Write a query to find available classes for a specific date
 
-SELECT * 
-FROM (
-    SELECT 
-        c.class_id,
-        c.name,
-        cs.start_time,
-        cs.end_time,
-        c.capacity - COUNT(ca.member_id) AS available_spots
-    FROM classes c
-    JOIN class_schedule cs ON c.class_id = cs.class_id
-    LEFT JOIN class_attendance ca ON cs.schedule_id = ca.schedule_id
-    WHERE cs.start_time BETWEEN '2025-02-01 00:00:00' AND '2025-02-01 23:59:59'
-    GROUP BY cs.schedule_id
-) AS filtered_classes
-WHERE available_spots > 0;
+SELECT 
+    c.class_id,
+    c.name AS class_name,
+    cs.start_time,
+    cs.end_time,
+    c.capacity - COUNT(ca.member_id) AS available_spots
+FROM classes c
+JOIN class_schedule cs ON c.class_id = cs.class_id
+LEFT JOIN class_attendance ca 
+    ON cs.schedule_id = ca.schedule_id 
+    AND ca.attendance_status = 'Registered'
+WHERE cs.start_time BETWEEN '2025-02-01 00:00:00' AND '2025-02-01 23:59:59'
+GROUP BY c.class_id, cs.start_time, cs.end_time, c.capacity
+HAVING available_spots > 0
+ORDER BY cs.start_time;
 
 
 -- 3. Register a member for a class
