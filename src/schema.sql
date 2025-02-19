@@ -26,7 +26,7 @@ CREATE TABLE locations (
     location_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(100) NOT NULL,
     address TEXT NOT NULL,
-    phone_number CHAR(15) NOT NULL CHECK(phone_number LIKE '555-____'),
+    phone_number CHAR(15) NOT NULL CHECK(length(phone_number) >= 7),
     email VARCHAR(255) NOT NULL UNIQUE CHECK(email LIKE '%_@__%.__%'),
     opening_hours VARCHAR(50) NOT NULL
 );
@@ -37,7 +37,7 @@ CREATE TABLE members (
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE CHECK(email LIKE '%_@__%.__%'),
-    phone_number CHAR(15) NOT NULL CHECK(phone_number LIKE '555-____'),
+    phone_number CHAR(15) NOT NULL CHECK(length(phone_number) >= 7),
     date_of_birth DATE NOT NULL CHECK(date_of_birth <= CURRENT_DATE),
     join_date DATE NOT NULL CHECK(join_date <= CURRENT_DATE),
     emergency_contact_name VARCHAR(100) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE staff (
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE CHECK(email LIKE '%_@__%.__%'),
-    phone_number CHAR(15) NOT NULL CHECK(phone_number LIKE '555-____'),
+    phone_number CHAR(15) NOT NULL CHECK(length(phone_number) >= 7),
     position VARCHAR(50) CHECK(position IN ('Trainer', 'Manager', 'Receptionist', 'Maintenance')) NOT NULL,
     hire_date DATE NOT NULL CHECK(hire_date <= CURRENT_DATE),
     location_id INTEGER NOT NULL,
@@ -152,10 +152,10 @@ CREATE TABLE member_health_metrics(
     metric_id INTEGER PRIMARY KEY AUTOINCREMENT,
     member_id INTEGER NOT NULL,
     measurement_date DATE NOT NULL CHECK(measurement_date <= CURRENT_DATE),
-    weight REAL NOT NULL CHECK(weight BETWEEN 20 AND 300),
-    body_fat_percentage REAL NOT NULL CHECK(body_fat_percentage BETWEEN 0 AND 100),
-    muscle_mass REAL NOT NULL,
-    bmi REAL NOT NULL CHECK(bmi BETWEEN 10 AND 50),
+    weight REAL NOT NULL CHECK(weight = ROUND(weight,1),
+    body_fat_percentage REAL NOT NULL CHECK(body_fat_percentage = ROUND(body_fat_percentage,1)),
+    muscle_mass REAL NOT NULL CHECK(muscle_mass = ROUND(muscle_mass,1),
+    bmi REAL NOT NULL CHECK(bmi = ROUND(bmi,1),
     FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
 );
 
