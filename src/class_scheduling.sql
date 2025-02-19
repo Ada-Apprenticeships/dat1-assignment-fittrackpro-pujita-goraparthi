@@ -23,7 +23,7 @@ JOIN staff s ON cs.staff_id = s.staff_id;
 
 SELECT 
     c.class_id,
-    c.name AS name,  
+    c.name,  
     cs.start_time,
     cs.end_time,
     c.capacity - COUNT(ca.member_id) AS available_spots

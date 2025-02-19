@@ -14,23 +14,21 @@ SELECT
     m.first_name,
     m.last_name,
     mem.type AS membership_type,
-    mem.start_date,
-    mem.end_date
+    m.join_date
 FROM memberships mem
 JOIN members m ON mem.member_id = m.member_id
 WHERE mem.status = 'Active';
+
 
 -- 2. Calculate the average duration of gym visits for each membership type
 -- TODO: Write a query to calculate the average duration of gym visits for each membership type
 
 SELECT 
     mem.type AS membership_type,
-    AVG(
-        (strftime('%s', a.check_out_time) - strftime('%s', a.check_in_time)) / 3600.0
-    ) AS avg_visit_duration_hours
-FROM memberships mem
-JOIN members m ON mem.member_id = m.member_id
-JOIN attendance a ON m.member_id = a.member_id
+    AVG(strftime('%s', a.check_out_time) - strftime('%s', a.check_in_time)) / 60.0 AS avg_visit_duration_minutes
+FROM attendance a
+JOIN members m ON a.member_id = m.member_id
+JOIN memberships mem ON m.member_id = mem.member_id
 GROUP BY mem.type;
 
 
@@ -45,5 +43,5 @@ SELECT
     mem.end_date
 FROM memberships mem
 JOIN members m ON mem.member_id = m.member_id
-WHERE strftime('%Y', mem.end_date) = strftime('%Y', 'now')
-AND mem.status = 'Active';
+WHERE mem.status = 'Active'  
+AND mem.end_date BETWEEN date('now') AND date('now', '+1 year');
