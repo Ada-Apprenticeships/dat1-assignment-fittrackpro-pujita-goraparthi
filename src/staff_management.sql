@@ -15,20 +15,20 @@ SELECT
     last_name, 
     position AS role
 FROM staff
-ORDER BY position, last_name;
+ORDER BY position;
 
 
 -- 2. Find trainers with one or more personal training session in the next 30 days
 -- TODO: Write a query to find trainers with one or more personal training session in the next 30 days
 
 SELECT 
-    s.staff_id AS trainer_id, 
-    s.first_name || ' ' || s.last_name AS trainer_name, 
+    s.staff_id AS trainer_id,
+    s.first_name || ' ' || s.last_name AS trainer_name,
     COUNT(pt.session_id) AS session_count
-FROM staff s
-JOIN personal_training_sessions pt ON s.staff_id = pt.staff_id
-WHERE pt.session_date BETWEEN date('now') AND date('now', '+30 days')
-AND s.position = 'Trainer'
-GROUP BY s.staff_id
+FROM personal_training_sessions pt
+JOIN staff s ON pt.staff_id = s.staff_id
+WHERE s.position = 'Trainer'
+AND pt.session_date BETWEEN date('now') AND date('now', '+30 days')
+GROUP BY s.staff_id, trainer_name
+HAVING session_count > 0
 ORDER BY session_count DESC;
-
