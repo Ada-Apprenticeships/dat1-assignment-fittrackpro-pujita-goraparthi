@@ -44,4 +44,4 @@ SELECT
 FROM memberships mem
 JOIN members m ON mem.member_id = m.member_id
 WHERE mem.status = 'Active'  
-AND mem.end_date BETWEEN date('now') AND date('now', '+1 year');
+AND mem.end_date BETWEEN date('now') AND date(strftime('%Y', 'now') || '-12-31');
