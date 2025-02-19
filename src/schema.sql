@@ -139,7 +139,7 @@ CREATE TABLE personal_training_sessions(
     session_id INTEGER PRIMARY KEY AUTOINCREMENT,
     member_id INTEGER NOT NULL,
     staff_id INTEGER NOT NULL,
-    session_date DATE NOT NULL,
+    session_date TEXT NOT NULL CHECK(session_date GLOB '[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]'),
     start_time TIME NOT NULL,
     end_time TIME NOT NULL CHECK(end_time > start_time),
     notes TEXT NOT NULL,
@@ -163,7 +163,7 @@ CREATE TABLE member_health_metrics(
 CREATE TABLE equipment_maintenance_log(
     log_id INTEGER PRIMARY KEY AUTOINCREMENT,
     equipment_id INTEGER NOT NULL,
-    maintenance_date DATE NOT NULL CHECK(maintenance_date <= CURRENT_DATE),
+    maintenance_date TEXT NOT NULL CHECK(session_date GLOB '[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]'),
     description TEXT NOT NULL,
     staff_id INTEGER NOT NULL,
     FOREIGN KEY (staff_id) REFERENCES staff(staff_id) ON DELETE CASCADE,
