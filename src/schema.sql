@@ -152,10 +152,10 @@ CREATE TABLE member_health_metrics(
     metric_id INTEGER PRIMARY KEY AUTOINCREMENT,
     member_id INTEGER NOT NULL,
     measurement_date DATE NOT NULL CHECK(measurement_date <= CURRENT_DATE),
-    weight REAL NOT NULL CHECK(weight = ROUND(weight,1),
+    weight REAL NOT NULL CHECK(weight = ROUND(weight,1)),
     body_fat_percentage REAL NOT NULL CHECK(body_fat_percentage = ROUND(body_fat_percentage,1)),
-    muscle_mass REAL NOT NULL CHECK(muscle_mass = ROUND(muscle_mass,1),
-    bmi REAL NOT NULL CHECK(bmi = ROUND(bmi,1),
+    muscle_mass REAL NOT NULL CHECK(muscle_mass = ROUND(muscle_mass,1)),
+    bmi REAL NOT NULL CHECK(bmi = ROUND(bmi,1)),
     FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
 );
 
