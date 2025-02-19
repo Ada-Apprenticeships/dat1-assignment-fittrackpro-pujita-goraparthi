@@ -8,6 +8,9 @@
 
 -- 1. List all personal training sessions for a specific trainer
 -- TODO: Write a query to list all personal training sessions for a specific trainer
+-- Joins `personal_training_sessions` with `staff` to get trainer details.
+-- Joins `members` to retrieve the name of the member attending the session.
+-- Uses `WHERE s.first_name = 'Ivy' AND s.last_name = 'Irwin'` to filter sessions for the specific trainer.
 
 SELECT 
     pt.session_id,

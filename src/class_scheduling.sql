@@ -8,6 +8,7 @@
 
 -- 1. List all classes with their instructors
 -- TODO: Write a query to list all classes with their instructors
+-- Uses the `class_schedule` table to associate classes with staff members.
 
 SELECT 
     c.class_id,
@@ -20,6 +21,8 @@ JOIN staff s ON cs.staff_id = s.staff_id;
 
 -- 2. Find available classes for a specific date
 -- TODO: Write a query to find available classes for a specific date
+-- LEFT JOIN ensures all scheduled classes appear, even if no one is registered yet.
+-- `HAVING available_spots > 0` ensures full classes are excluded.
 
 SELECT 
     c.class_id,
@@ -40,6 +43,8 @@ ORDER BY cs.start_time;
 
 -- 3. Register a member for a class
 -- TODO: Write a query to register a member for a class
+-- Ensures the member isn't already registered for the class using `NOT EXISTS`.
+-- Uses `LIMIT 1` to register the member for only one matching class instance.
 
 INSERT INTO class_attendance (schedule_id, member_id, attendance_status)
 SELECT schedule_id, 11, 'Registered'
@@ -69,6 +74,7 @@ WHERE member_id = 2 AND schedule_id = 7;
 
 -- 5. List top 3 most popular classes
 -- TODO: Write a query to list top 3 most popular classes
+-- Uses `ORDER BY registration_count DESC` to rank classes by popularity.
 
 SELECT 
     cs.class_id,
@@ -87,6 +93,7 @@ LIMIT 3;
 
 -- 6. Calculate average number of classes per member
 -- TODO: Write a query to calculate average number of classes per member
+-- Uses `CAST()` to ensure float division rather than integer division.
 
 SELECT 
     CAST(COUNT(ca.member_id) AS FLOAT) / (SELECT COUNT(*) FROM members) AS avg_classes_per_member

@@ -22,6 +22,8 @@ WHERE mem.status = 'Active';
 
 -- 2. Calculate the average duration of gym visits for each membership type
 -- TODO: Write a query to calculate the average duration of gym visits for each membership type
+-- `strftime('%s', check_out_time) - strftime('%s', check_in_time)` converts timestamps to seconds and finds the duration.
+-- Division by 60 converts the result into minutes.
 
 SELECT 
     mem.type AS membership_type,
@@ -34,6 +36,8 @@ GROUP BY mem.type;
 
 -- 3. Identify members with expiring memberships this year
 -- TODO: Write a query to identify members with expiring memberships this year
+-- Retrieves all members whose memberships are set to expire before the end of the current year.
+-- Uses `strftime('%Y', 'now') || '-12-31'` to dynamically get December 31 of the current year.
 
 SELECT 
     m.member_id,

@@ -8,6 +8,8 @@
 
 -- 1. List all staff members by role
 -- TODO: Write a query to list all staff members by role
+-- Retrieves all staff members and their positions, ordered by role.
+-- Sorting by position ensures trainers, managers, receptionists, and maintenance staff are grouped together.
 
 SELECT 
     staff_id, 
@@ -20,6 +22,8 @@ ORDER BY position;
 
 -- 2. Find trainers with one or more personal training session in the next 30 days
 -- TODO: Write a query to find trainers with one or more personal training session in the next 30 days
+-- Uses `date('now') AND date('now', '+30 days')` to limit results to future sessions.
+-- `HAVING session_count > 0` ensures only trainers with scheduled sessions appear.
 
 SELECT 
     s.staff_id AS trainer_id,

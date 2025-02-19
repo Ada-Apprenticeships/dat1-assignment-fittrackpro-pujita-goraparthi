@@ -26,6 +26,9 @@ GROUP BY type;
 
 -- 3. Calculate average age of equipment by type (in days)
 -- TODO: Write a query to calculate average age of equipment by type (in days)
+-- Calculates the average age of equipment using the difference between the purchase date and the current date.
+-- `strftime('%s', 'now')` and `strftime('%s', purchase_date)` convert dates to seconds.
+-- Division by 86400 converts seconds into days.
 
 SELECT 
     type AS equipment_type,

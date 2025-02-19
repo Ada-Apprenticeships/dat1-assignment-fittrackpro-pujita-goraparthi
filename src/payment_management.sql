@@ -8,12 +8,14 @@
 
 -- 1. Record a payment for a membership
 -- TODO: Write a query to record a payment for a membership
+-- Uses CURRENT_TIMESTAMP to store the exact date and time of payment.
 
 INSERT INTO payments (member_id, amount, payment_date, payment_method, payment_type)
 VALUES (11, 50, CURRENT_TIMESTAMP, 'Credit Card', 'Monthly membership fee');
 
 -- 2. Calculate total revenue from membership fees for each month of the last year
 -- TODO: Write a query to calculate total revenue from membership fees for each month of the current year
+-- Generates a complete list of months to ensure months without payments still appear in the result.
 
 WITH months AS (
     SELECT 'January' AS month_name, '01' AS month_number UNION ALL

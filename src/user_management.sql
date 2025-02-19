@@ -34,6 +34,7 @@ FROM members;
 
 -- 4. Find member with the most class registrations
 -- TODO: Write a query to find the member with the most class registrations
+-- Uses a WITH clause (Common Table Expression) to count registrations per member
 
 WITH registration_counts AS (
     SELECT 
@@ -77,6 +78,7 @@ HAVING registration_count = (
 
 -- 6. Calculate the percentage of members who have attended at least one class
 -- TODO: Write a query to calculate the percentage of members who have attended at least one class
+-- Calculates the percentage by counting DISTINCT members who have "Attended" a class
 
 SELECT 
     (COUNT(DISTINCT member_id) * 100.0 / (SELECT COUNT(*) FROM members)) AS attendance_percentage
