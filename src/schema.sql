@@ -123,16 +123,16 @@ CREATE TABLE class_attendance(
     FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
 );
 
-    -- payments table
-    CREATE TABLE payments(
-        payment_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        member_id INTEGER NOT NULL,
-        amount REAL NOT NULL CHECK(amount > 0),
-        payment_date DATETIME NOT NULL CHECK(payment_date <= CURRENT_TIMESTAMP),
-        payment_method VARCHAR(50) CHECK(payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal', 'Cash')) NOT NULL,
-        payment_type VARCHAR(50) CHECK(payment_type IN ('Monthly membership fee', 'Day pass')) NOT NULL,
-        FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
-    );
+-- payments table
+CREATE TABLE payments(
+    payment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    member_id INTEGER NOT NULL,
+    amount REAL NOT NULL CHECK(amount > 0),
+    payment_date DATETIME NOT NULL CHECK(payment_date <= CURRENT_TIMESTAMP),
+    payment_method VARCHAR(50) CHECK(payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal', 'Cash')) NOT NULL,
+    payment_type VARCHAR(50) CHECK(payment_type IN ('Monthly membership fee', 'Day pass')) NOT NULL,
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
+);
 
 -- personal_training_sessions table
 CREATE TABLE personal_training_sessions(
