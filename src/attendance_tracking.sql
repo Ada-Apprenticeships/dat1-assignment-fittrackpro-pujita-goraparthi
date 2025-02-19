@@ -10,17 +10,19 @@
 -- TODO: Write a query to record a member's gym visit
 
 INSERT INTO attendance (member_id, location_id, check_in_time, check_out_time)
-VALUES 
-(7, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES (7, 1, CURRENT_TIMESTAMP, NULL);
 
 -- 2. Retrieve a member's attendance history
 -- TODO: Write a query to retrieve a member's attendance history
 
 SELECT 
-    a.check_in_time,
-    a.check_out_time
-FROM attendance a
-WHERE a.member_id = 5;
+    DATE(check_in_time) AS visit_date,  
+    check_in_time,
+    check_out_time
+FROM attendance
+WHERE member_id = 5
+ORDER BY check_in_time DESC;  
+
 
 -- 3. Find the busiest day of the week based on gym visits
 -- TODO: Write a query to find the busiest day of the week based on gym visits
@@ -39,13 +41,12 @@ SELECT
     l.name AS location_name,
     AVG(daily_visits) AS avg_daily_attendance
 FROM locations l
-JOIN attendance a ON l.location_id = a.location_id
 JOIN (
     SELECT 
-        location_id,
-        strftime('%Y-%m-%d', check_in_time) AS visit_date,
+        a.location_id,
+        DATE(a.check_in_time) AS visit_date,
         COUNT(*) AS daily_visits
-    FROM attendance
-    GROUP BY location_id, visit_date
+    FROM attendance a
+    GROUP BY a.location_id, visit_date
 ) AS daily_attendance ON l.location_id = daily_attendance.location_id
-GROUP BY l.location_id;
+GROUP BY l.name;
